@@ -1,0 +1,30 @@
+import { AuthUtils } from '~/utils/auth';
+import type { User } from '~/types';
+
+export default defineNuxtRouteMiddleware((to, from) => {
+  const token = useCookie('auth-token');
+  
+  if (!token.value) {
+    return navigateTo('/login');
+  }
+
+  // Проверяем валидность токена
+  const payload = AuthUtils.verifyToken(token.value);
+  
+  if (!payload) {
+    // Токен недействителен, удаляем его и перенаправляем на логин
+    token.value = null;
+    return navigateTo('/login');
+  }
+
+  // Сохраняем информацию о пользователе в сторе
+  const userStore = useUserStore();
+  userStore.setUser({
+    id: payload.userId,
+    email: payload.email,
+    role: payload.role as 'client' | 'admin',
+    name: '',
+    created_at: new Date(),
+    updated_at: new Date()
+  });
+});
