@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
     <!-- Hero Section with Animated Background -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
       <!-- Animated background elements -->
@@ -255,17 +255,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '../components/stores/user';
+import EventCard from '../components/EventCard.vue';
 import type { Event } from '../types/index';
+import { useHead, navigateTo } from '#app';
 import { 
   Zap, ArrowRight, LogIn, Calendar, 
   CalendarDays, QrCode, Clock, Users, Image, BarChart3, Plus, Rocket 
 } from 'lucide-vue-next';
-
-// Отключаем middleware для этой страницы
-definePageMeta({
-  middleware: []
-});
 
 const userStore = useUserStore();
 const events = ref<Event[]>([]);

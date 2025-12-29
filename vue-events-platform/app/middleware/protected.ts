@@ -2,11 +2,6 @@ import { AuthUtils } from '../utils/auth';
 import type { User } from '../types/index';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  // Разрешаем доступ к страницам логина и регистрации без аутентификации
-  if (to.path === '/login' || to.path === '/register') {
-    return;
-  }
-
   const token = useCookie('auth-token');
   
   if (!token.value) {

@@ -6,13 +6,28 @@
         <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center mx-auto mb-4">
           <Sparkles class="w-8 h-8 text-white" />
         </div>
-        <h1 class="text-3xl font-bold text-white">Sign In</h1>
-        <p class="text-slate-400 mt-2">Welcome back to Events Platform</p>
+        <h1 class="text-3xl font-bold text-white">Create Account</h1>
+        <p class="text-slate-400 mt-2">Join Events Platform today</p>
       </div>
 
-      <!-- Login Form -->
+      <!-- Register Form -->
       <div class="rounded-2xl border border-slate-700/50 bg-slate-800/30 backdrop-blur-md p-8">
-        <form @submit.prevent="handleLogin" class="space-y-4">
+        <form @submit.prevent="handleRegister" class="space-y-4">
+          <!-- Full Name -->
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">
+              <User class="w-4 h-4 inline-block mr-2" />
+              Full Name
+            </label>
+            <input
+              v-model="name"
+              type="text"
+              placeholder="John Doe"
+              class="w-full px-4 py-2 rounded-lg bg-slate-900/50 border border-slate-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
+              required
+            />
+          </div>
+
           <!-- Email -->
           <div>
             <label class="block text-sm font-medium text-white mb-2">
@@ -41,6 +56,22 @@
               class="w-full px-4 py-2 rounded-lg bg-slate-900/50 border border-slate-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
               required
             />
+            <p class="text-xs text-slate-400 mt-1">Minimum 6 characters</p>
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">
+              <Lock class="w-4 h-4 inline-block mr-2" />
+              Confirm Password
+            </label>
+            <input
+              v-model="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              class="w-full px-4 py-2 rounded-lg bg-slate-900/50 border border-slate-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
+              required
+            />
           </div>
 
           <!-- Error Message -->
@@ -49,14 +80,20 @@
             {{ error }}
           </div>
 
+          <!-- Success Message -->
+          <div v-if="success" class="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+            <CheckCircle class="w-4 h-4 inline-block mr-2" />
+            {{ success }}
+          </div>
+
           <!-- Submit Button -->
           <button
             type="submit"
             :disabled="isLoading"
             class="w-full py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
-            <LogIn class="w-4 h-4" v-if="!isLoading" />
-            <span>{{ isLoading ? 'Signing in...' : 'Sign In' }}</span>
+            <UserPlus class="w-4 h-4" v-if="!isLoading" />
+            <span>{{ isLoading ? 'Creating account...' : 'Create Account' }}</span>
           </button>
         </form>
 
@@ -66,17 +103,17 @@
             <div class="w-full border-t border-slate-700"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-slate-800/30 text-slate-400">Don't have an account?</span>
+            <span class="px-2 bg-slate-800/30 text-slate-400">Already have an account?</span>
           </div>
         </div>
 
-        <!-- Sign Up Link -->
+        <!-- Sign In Link -->
         <NuxtLink
-          to="/register"
+          to="/login"
           class="w-full py-2 rounded-lg border border-slate-700 text-white font-medium hover:bg-slate-700/50 transition-colors flex items-center justify-center space-x-2"
         >
-          <UserPlus class="w-4 h-4" />
-          <span>Create Account</span>
+          <LogIn class="w-4 h-4" />
+          <span>Sign In</span>
         </NuxtLink>
       </div>
 
@@ -93,44 +130,60 @@
 
 <script setup lang="ts">
 import { useUserStore } from '../components/stores/user';
-import { Sparkles, Mail, Lock, LogIn, AlertCircle, UserPlus, ArrowLeft } from 'lucide-vue-next';
-
-// Отключаем middleware для этой страницы
-definePageMeta({
-  middleware: []
-});
+import { Sparkles, User, Mail, Lock, UserPlus, AlertCircle, CheckCircle, LogIn, ArrowLeft } from 'lucide-vue-next';
 
 const userStore = useUserStore();
-const router = useRouter();
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
+const confirmPassword = ref('');
 const error = ref('');
+const success = ref('');
 const isLoading = ref(false);
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   error.value = '';
+  success.value = '';
+
+  // Validate passwords match
+  if (password.value !== confirmPassword.value) {
+    error.value = 'Passwords do not match';
+    return;
+  }
+
+  // Validate password length
+  if (password.value.length < 6) {
+    error.value = 'Password must be at least 6 characters';
+    return;
+  }
+
   isLoading.value = true;
 
   try {
-    await userStore.login({
+    await userStore.register({
+      name: name.value,
       email: email.value,
       password: password.value
     });
 
-    // Redirect to home on success
-    await navigateTo('/');
+    success.value = 'Account created successfully! Redirecting...';
+    
+    // Redirect to home after a short delay
+    setTimeout(() => {
+      navigateTo('/');
+    }, 1500);
   } catch (err: any) {
-    error.value = err.message || 'Failed to sign in. Please try again.';
+    error.value = err.message || 'Failed to create account. Please try again.';
   } finally {
     isLoading.value = false;
   }
 };
 
 useHead({
-  title: 'Sign In - Events Platform',
+  title: 'Sign Up - Events Platform',
   meta: [
-    { name: 'description', content: 'Sign in to your Events Platform account' }
+    { name: 'description', content: 'Create a new Events Platform account' }
   ]
 });
 </script>

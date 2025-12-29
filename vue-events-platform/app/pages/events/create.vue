@@ -114,6 +114,11 @@ import {
   ArrowLeft, Type, FileText, Calendar, MapPin, Users, AlertCircle, Plus 
 } from 'lucide-vue-next';
 
+// Применяем middleware для защиты страницы
+definePageMeta({
+  middleware: 'protected'
+});
+
 const formData = ref({
   title: '',
   description: '',

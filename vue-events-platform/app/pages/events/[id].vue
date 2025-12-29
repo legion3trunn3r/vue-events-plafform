@@ -103,6 +103,11 @@ import {
   ArrowLeft, Calendar, MapPin, Users, User, FileText, Clock, QrCode, AlertCircle 
 } from 'lucide-vue-next';
 
+// Применяем middleware для защиты страницы
+definePageMeta({
+  middleware: 'protected'
+});
+
 const route = useRoute();
 const event = ref<Event | null>(null);
 const isLoading = ref(true);
