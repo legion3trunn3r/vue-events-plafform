@@ -301,8 +301,8 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '../components/stores/user';
-import type { Event } from '../types/index';
+import { useUserStore } from './components/stores/user';
+import type { Event } from './types/index';
 import { 
   Sparkles, Plus, LogOut, Zap, ArrowRight, LogIn, Calendar, 
   CalendarDays, QrCode, Clock, Users, Image, BarChart3, Rocket 

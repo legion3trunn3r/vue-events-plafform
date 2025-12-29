@@ -1,24 +1,24 @@
 <template>
   <div class="timer text-center">
-    <div class="flex justify-center space-x-4">
+    <div class="flex justify-center items-center space-x-3">
       <div class="timer-unit">
-        <div class="timer-number">{{ days }}</div>
-        <div class="timer-label">дней</div>
+        <div class="timer-number">{{ String(days).padStart(2, '0') }}</div>
+        <div class="timer-label">Days</div>
       </div>
-      <div class="timer-separator">:</div>
+      <div class="timer-separator">•</div>
       <div class="timer-unit">
-        <div class="timer-number">{{ hours }}</div>
-        <div class="timer-label">часов</div>
+        <div class="timer-number">{{ String(hours).padStart(2, '0') }}</div>
+        <div class="timer-label">Hours</div>
       </div>
-      <div class="timer-separator">:</div>
+      <div class="timer-separator">•</div>
       <div class="timer-unit">
-        <div class="timer-number">{{ minutes }}</div>
-        <div class="timer-label">минут</div>
+        <div class="timer-number">{{ String(minutes).padStart(2, '0') }}</div>
+        <div class="timer-label">Minutes</div>
       </div>
-      <div class="timer-separator">:</div>
+      <div class="timer-separator">•</div>
       <div class="timer-unit">
-        <div class="timer-number">{{ seconds }}</div>
-        <div class="timer-label">секунд</div>
+        <div class="timer-number">{{ String(seconds).padStart(2, '0') }}</div>
+        <div class="timer-label">Seconds</div>
       </div>
     </div>
   </div>
@@ -81,18 +81,31 @@ onUnmounted(() => {
 
 <style scoped>
 .timer-number {
-  @apply text-2xl font-bold text-blue-600;
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .timer-label {
-  @apply text-xs text-gray-500 uppercase tracking-wide;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
 }
 
 .timer-separator {
-  @apply text-lg font-bold text-gray-400;
+  font-weight: 700;
+  color: #64748b;
 }
 
 .timer-unit {
-  @apply flex flex-col items-center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
