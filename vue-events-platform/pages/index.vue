@@ -262,6 +262,11 @@ import {
   CalendarDays, QrCode, Clock, Users, Image, BarChart3, Plus, Rocket 
 } from 'lucide-vue-next';
 
+// Отключаем middleware для этой страницы
+definePageMeta({
+  middleware: []
+});
+
 const userStore = useUserStore();
 const events = ref<Event[]>([]);
 const isLoading = ref(true);

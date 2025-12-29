@@ -95,6 +95,11 @@
 import { useUserStore } from '../components/stores/user';
 import { Sparkles, Mail, Lock, LogIn, AlertCircle, UserPlus, ArrowLeft } from 'lucide-vue-next';
 
+// Отключаем middleware для этой страницы
+definePageMeta({
+  middleware: []
+});
+
 const userStore = useUserStore();
 const router = useRouter();
 
