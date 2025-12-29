@@ -140,8 +140,8 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '~/components/stores/user';
-import type { Event } from '~/types';
+import { useUserStore } from '../components/stores/user';
+import type { Event } from '../types/index';
 
 const userStore = useUserStore();
 const events = ref<Event[]>([]);

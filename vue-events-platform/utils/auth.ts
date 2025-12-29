@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import type { User, JWTPayload } from '~/types';
+import type { User, JWTPayload } from '../types/index';
 
 export class AuthUtils {
   private static readonly SALT_ROUNDS = 12;
@@ -58,7 +58,7 @@ export class AuthUtils {
     const parts = authorization.split(' ');
     if (parts.length !== 2 || parts[0] !== 'Bearer') return null;
     
-    return parts[1];
+    return parts[1] || null;
   }
 
   /**

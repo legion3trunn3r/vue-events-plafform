@@ -1,5 +1,5 @@
-import { AuthUtils } from '~/utils/auth';
-import type { User } from '~/types';
+import { AuthUtils } from '../utils/auth';
+import type { User } from '../types/index';
 
 export default defineNuxtRouteMiddleware((to, from) => {
   const token = useCookie('auth-token');

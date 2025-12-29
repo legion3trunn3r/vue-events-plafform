@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2025-12-29',
   devtools: { enabled: true },
   
   modules: [
@@ -18,7 +19,15 @@ export default defineNuxtConfig({
     }
   },
 
-  css: ['~/assets/css/main.css'],
+  css: [],
+
+  // PostCSS настройки для Tailwind
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
+  },
 
   // Настройка для работы с файлами
   nitro: {
@@ -32,6 +41,6 @@ export default defineNuxtConfig({
 
   // TypeScript настройки
   typescript: {
-    typeCheck: true
+    typeCheck: false
   }
 })

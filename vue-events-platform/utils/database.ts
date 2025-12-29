@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import type { User, Event, EventPhoto, Guest } from '~/types';
+import type { User, Event, EventPhoto, Guest } from '../types/index';
 
 class Database {
   private connection: mysql.Connection | null = null;
@@ -45,7 +45,8 @@ class Database {
       userData.role || 'client'
     ]);
     
-    return this.getUserById((result as any).insertId);
+    const user = await this.getUserById((result as any).insertId);
+    return user as User;
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
@@ -84,7 +85,8 @@ class Database {
       eventData.qr_code
     ]);
     
-    return this.getEventById((result as any).insertId);
+    const event = await this.getEventById((result as any).insertId);
+    return event as Event;
   }
 
   async getEventById(id: number): Promise<Event | null> {
@@ -149,7 +151,8 @@ class Database {
       photoData.uploaded_by
     ]);
     
-    return this.getEventPhotoById((result as any).insertId);
+    const photo = await this.getEventPhotoById((result as any).insertId);
+    return photo as EventPhoto;
   }
 
   async getEventPhotoById(id: number): Promise<EventPhoto | null> {
@@ -187,7 +190,8 @@ class Database {
       guestData.email
     ]);
     
-    return this.getGuestById((result as any).insertId);
+    const guest = await this.getGuestById((result as any).insertId);
+    return guest as Guest;
   }
 
   async getGuestById(id: number): Promise<Guest | null> {

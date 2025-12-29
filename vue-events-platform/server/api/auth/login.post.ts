@@ -1,6 +1,6 @@
-import { db } from '~/utils/database';
-import { AuthUtils } from '~/utils/auth';
-import type { UserLogin, ApiResponse } from '~/types';
+import { db } from '../../../utils/database';
+import { AuthUtils } from '../../../utils/auth';
+import type { UserLogin, ApiResponse } from '../../../types';
 
 export default defineEventHandler(async (event): Promise<ApiResponse> => {
   try {

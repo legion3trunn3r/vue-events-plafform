@@ -3,6 +3,7 @@ export interface User {
   email: string;
   name: string;
   role: 'client' | 'admin';
+  password?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -72,6 +73,7 @@ export interface ApiResponse<T = any> {
   data?: T;
   message?: string;
   error?: string;
+  token?: string;
 }
 
 export interface JWTPayload {

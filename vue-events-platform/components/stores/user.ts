@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { User, UserLogin, UserRegistration } from '~/types';
+import type { User, UserLogin, UserRegistration } from '../../types/index';
 
 interface UserState {
   user: User | null;

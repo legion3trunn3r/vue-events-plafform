@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Event } from '~/types';
+import type { Event } from '../types/index';
 
 interface Props {
   event: Event;
@@ -96,6 +96,7 @@ const formatDate = (date: Date | string) => {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
